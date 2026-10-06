@@ -1,164 +1,92 @@
 <!doctype html>
 <html lang="ms">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pusat SMART Desa Negeri Selangor</title>
-<link rel="preconnect" href="https://unpkg.com">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pusat SMART Desa Negeri Selangor | PLANMalaysia Selangor</title>
+<meta name="description" content="Peta interaktif dan profil Pusat SMART Desa Negeri Selangor">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<style>
-:root{--navy:#073763;--blue:#0b67b2;--cyan:#0ea5c6;--green:#169447;--gold:#f5b81b;--ink:#18324b;--muted:#65788b;--bg:#eef5f8;--white:#fff;--line:#d9e5ec;--shadow:0 10px 30px rgba(7,55,99,.12)}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#eaf5f9,#f7fafb 50%,#eef4f7)}
-.header{background:linear-gradient(110deg,#062e58,#0b5f9f 58%,#087e86);color:white;padding:18px 34px 0;box-shadow:0 5px 18px rgba(0,0,0,.15)}
-.brand{display:flex;align-items:center;gap:18px;max-width:1500px;margin:auto}.crest{width:62px;height:62px;border-radius:14px;background:#fff2;display:grid;place-items:center;font-size:29px;border:1px solid #ffffff44}.brand h1{font-size:29px;letter-spacing:.8px;margin:0;font-weight:800}.brand p{margin:3px 0 0;opacity:.86;font-size:12px;letter-spacing:.8px}.tag{margin-left:auto;text-align:right}.tag strong{display:block;font-size:18px;letter-spacing:3px}.tag span{font-size:11px;opacity:.8}
-.nav{max-width:1500px;margin:18px auto 0;display:flex;gap:3px;overflow:auto}.nav button{border:0;background:transparent;color:white;padding:13px 18px;font-weight:700;cursor:pointer;border-radius:10px 10px 0 0;white-space:nowrap}.nav button.active,.nav button:hover{background:#fff;color:var(--navy)}
-.wrap{max-width:1500px;margin:22px auto;padding:0 22px}.hero{background:white;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:24px;display:flex;justify-content:space-between;gap:25px;align-items:center;margin-bottom:18px}.hero h2{margin:0;color:var(--navy);font-size:30px}.hero p{margin:7px 0 0;color:var(--muted);max-width:850px}.badge{background:#e9f7ef;color:#14733b;border:1px solid #bfe6ce;padding:9px 13px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
-.grid{display:grid;grid-template-columns:300px minmax(520px,1fr) 370px;gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.cardhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.cardhead h3{margin:0;font-size:16px;color:var(--navy)}.content{padding:17px}.metricgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{padding:15px;border-radius:14px;background:#f2f8fb;border:1px solid #dcecf3}.metric b{font-size:26px;color:var(--navy);display:block}.metric span{font-size:11px;color:var(--muted);font-weight:700}.metric.gold{background:#fff8df}.metric.green{background:#edf9f1}.metric.blue{background:#edf6ff}.metric.pink{background:#fff0f5}
-.objective{display:flex;gap:11px;margin:14px 0}.ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:#eaf4fb;color:var(--blue);font-weight:900}.objective b{display:block;font-size:12px}.objective span{display:block;color:var(--muted);font-size:11px;line-height:1.45;margin-top:2px}
-.mapwrap{height:650px;position:relative}.map{height:100%;width:100%}.filters{position:absolute;z-index:900;top:12px;left:12px;right:12px;display:flex;gap:8px;flex-wrap:wrap}.filters select,.filters input{border:1px solid #cddde6;background:#fff;border-radius:10px;padding:10px 12px;box-shadow:0 5px 15px #0002;font-size:12px}.filters input{min-width:220px}
-.profile-img{height:175px;background:linear-gradient(135deg,#d9eef4,#f8f3dc);display:grid;place-items:center;color:var(--navy);font-weight:800;letter-spacing:.5px}.profile{padding:18px}.profile h2{font-size:22px;margin:0 0 5px;color:var(--navy)}.profile .district{color:var(--blue);font-weight:800;font-size:12px}.info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.info div{padding:10px;border:1px solid var(--line);border-radius:10px}.info small{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;font-weight:800}.info b{font-size:12px}.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{padding:7px 9px;background:#eef7fb;border-radius:999px;font-size:10px;font-weight:700;color:#225a7c}.btn{display:inline-block;margin-top:14px;width:100%;text-align:center;padding:11px;border-radius:10px;background:var(--navy);color:#fff;text-decoration:none;font-weight:800;font-size:12px}
-.list{max-height:440px;overflow:auto}.loc{padding:12px 15px;border-bottom:1px solid #edf2f5;cursor:pointer}.loc:hover{background:#f3f9fb}.loc b{font-size:12px}.loc small{display:block;color:var(--muted);margin-top:3px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;background:var(--blue)}.dot.priority{background:var(--gold)}.dot.short{background:#8b5cf6}
-.section{margin-top:18px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.photoCard{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}.photo{height:150px;background:linear-gradient(135deg,#b6d9e3,#f4e6b0);display:grid;place-items:center;color:#365d70;font-weight:800}.photoCard .pc{padding:13px}.pc b{font-size:13px}.pc small{display:block;color:var(--muted);margin-top:4px}
-.footer{margin-top:30px;background:#052e55;color:#c9d8e4;padding:25px 22px;font-size:11px}.footerinner{max-width:1500px;margin:auto;display:flex;justify-content:space-between;gap:20px}.notice{margin-top:10px;padding:11px;border-radius:10px;background:#fff8df;border:1px solid #f1d56c;color:#715b11;font-size:10px;line-height:1.5}
-@media(max-width:1100px){.grid{grid-template-columns:1fr}.mapwrap{height:520px}.cards{grid-template-columns:1fr 1fr}.tag{display:none}}
-@media(max-width:650px){.wrap{padding:0 10px}.hero{padding:17px}.hero h2{font-size:22px}.cards{grid-template-columns:1fr}.header{padding-left:15px;padding-right:15px}.brand h1{font-size:20px}.brand .crest{width:48px;height:48px}.grid{gap:10px}.mapwrap{height:470px}}
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div class="topbar"></div>
 <header class="header">
-  <div class="brand">
-    <div class="crest">✦</div>
-    <div><h1>PLANMalaysia Selangor</h1><p>JABATAN PERANCANGAN BANDAR DAN DESA NEGERI SELANGOR</p></div>
-    <div class="tag"><strong>PUSAT SMART DESA</strong><span>DESA BESTARI • KOMUNITI SEJAHTERA • SELANGOR MAJU</span></div>
+  <div class="container headrow">
+    <div class="brandmark">PS</div>
+    <div class="brand"><h1>PLANMalaysia Selangor</h1><small>JABATAN PERANCANGAN BANDAR DAN DESA NEGERI SELANGOR</small></div>
+    <div class="headactions"><span class="pill">BM</span><a class="pill primary" href="#mapSection">Teroka Peta →</a></div>
   </div>
-  <nav class="nav">
-    <button class="active">⌂ Laman Utama</button><button>▣ Mengenai Projek</button><button>⌖ Peta Interaktif</button><button>☷ Senarai Lokasi</button><button>▧ Galeri</button><button>▥ Data & Impak</button><button>▤ Dokumen</button>
-  </nav>
+  <nav class="nav"><div class="container navinner">
+    <a class="active" href="#utama">Utama</a><a href="#mapSection">Peta Interaktif</a><a href="#profil">Profil Pusat</a><a href="#impak">Data & Impak</a><a href="#lokasi">Senarai Lokasi</a><a href="#footer">Maklumat</a>
+  </div></nav>
 </header>
 
-<main class="wrap">
+<main id="utama" class="container">
 <section class="hero">
-  <div><h2>Peta & Profil Pusat SMART Desa Negeri Selangor</h2><p>Platform awam untuk meneroka lokasi, profil, komponen kemudahan dan maklumat pelaksanaan Pusat SMART Desa secara lebih tersusun dan interaktif.</p></div>
-  <div class="badge">VERSI KORPORAT • PAPARAN AWAM</div>
-</section>
-
-<div class="grid">
-<aside>
-  <div class="card">
-    <div class="cardhead"><h3>Ringkasan Projek</h3><span>01</span></div>
-    <div class="content">
-      <p style="font-size:12px;line-height:1.55;color:#526b7e;margin-top:0">Pusat SMART Desa merupakan pendekatan untuk memperkukuh kemudahan komuniti desa, memenuhi keperluan ICT serta mewujudkan persekitaran yang lebih kondusif melalui kerjasama strategik agensi, Pejabat Daerah/Tanah dan MPKK.</p>
-      <div class="objective"><div class="ico">👥</div><div><b>KESEJAHTERAAN KOMUNITI</b><span>Menyokong kesejahteraan dan keselesaan masyarakat desa.</span></div></div>
-      <div class="objective"><div class="ico">⚙</div><div><b>PERSEKITARAN KONDUSIF</b><span>Menyediakan kemudahan mengikut keperluan setempat.</span></div></div>
-      <div class="objective"><div class="ico">🤝</div><div><b>JALINAN KERJASAMA</b><span>Kolaborasi antara agensi dan komuniti.</span></div></div>
+  <div class="heroGrid">
+    <div class="heroMain">
+      <div class="eyebrow">PLATFORM INFORMASI DESA • NEGERI SELANGOR</div>
+      <h2>PUSAT<br>SMART DESA</h2>
+      <p>Gerbang digital untuk meneroka lokasi, profil, komponen kemudahan dan perkembangan Pusat SMART Desa — direka supaya maklumat perancangan desa lebih mudah difahami oleh komuniti dan pemegang taruh.</p>
+      <div class="heroBtns"><button class="cta gold" onclick="document.querySelector('#mapSection').scrollIntoView({behavior:'smooth'})">LIHAT PETA INTERAKTIF ↗</button><button class="cta ghost" onclick="document.querySelector('#lokasi').scrollIntoView({behavior:'smooth'})">TEROKA LOKASI</button></div>
     </div>
-  </div>
-  <div class="card" style="margin-top:16px">
-    <div class="cardhead"><h3>Statistik Rujukan 2024</h3><span>02</span></div>
-    <div class="content"><div class="metricgrid">
-      <div class="metric blue"><b id="mTotal">18</b><span>Lokasi awal</span></div>
-      <div class="metric green"><b id="mShort">5</b><span>Senarai pendek</span></div>
-      <div class="metric gold"><b id="mPriority">2</b><span>Keutamaan 2024</span></div>
-      <div class="metric pink"><b>5</b><span>Kriteria pemilihan</span></div>
+    <div class="heroSide">
+      <div class="statHero"><b id="total">18</b><span>LOKASI RUJUKAN AWAL</span><strong>● Dokumen projek perintis 2024</strong></div>
+      <div class="statHero"><b id="short">5</b><span>SENARAI PENDEK</span><strong>● Berdasarkan saringan projek perintis</strong></div>
+      <div class="statHero"><b id="priority">2</b><span>KEUTAMAAN 2024</span><strong>● Lokasi yang diberi keutamaan awal</strong></div>
     </div>
-    <div class="notice"><b>Nota data:</b> Statistik ini berpandukan dokumen projek perintis 2024. Status semasa dan data GIS rasmi perlu dikemas kini sebelum penerbitan akhir.</div>
-    </div>
-  </div>
-</aside>
-
-<section class="card">
-  <div class="cardhead"><h3>⌖ Peta Interaktif Pusat SMART Desa</h3><span id="countLabel">18 lokasi</span></div>
-  <div class="mapwrap">
-    <div class="filters">
-      <input id="search" placeholder="Cari kampung / daerah...">
-      <select id="district"><option value="">Semua Daerah</option></select>
-      <select id="status"><option value="">Semua Status</option><option>Keutamaan 2024</option><option>Senarai pendek 2024</option><option>Senarai awal 2024</option><option>Rujukan semasa 2025</option></select>
-    </div>
-    <div id="map" class="map"></div>
   </div>
 </section>
 
-<aside class="card" id="profileCard">
-  <div class="profile-img">GAMBAR RASMI PUSAT SMART DESA</div>
-  <div class="profile">
-    <div class="district" id="pStatus">KEUTAMAAN 2024</div>
-    <h2 id="pName">Kampung Sri Taman Baru</h2>
-    <div style="font-size:11px;color:#6b7f8f">Hulu Langat • Selangor</div>
-    <div class="info">
-      <div><small>Daerah</small><b id="pDistrict">Hulu Langat</b></div>
-      <div><small>Mukim</small><b id="pMukim">Penghulu Ampang 2</b></div>
-      <div><small>DUN</small><b id="pDun">N20 Lembah Jaya</b></div>
-      <div><small>Koordinat</small><b id="pCoord">—</b></div>
+<section id="mapSection" class="section">
+  <div class="sectionTitle"><div><h3>Peta Interaktif</h3><p>Klik penanda untuk melihat ringkasan profil Pusat SMART Desa.</p></div><span class="mini" id="count">18 lokasi dipaparkan</span></div>
+  <div class="mapCard">
+    <div class="mapHead"><h3>⌖ LOKASI PUSAT SMART DESA</h3><div class="filters"><input id="search" placeholder="Cari kampung, daerah atau DUN..."><select id="district"><option value="">Semua Daerah</option></select><select id="status"><option value="">Semua Status</option><option>Keutamaan 2024</option><option>Senarai pendek 2024</option><option>Senarai awal 2024</option><option>Rujukan semasa 2025</option></select><button id="reset" class="pill" style="padding:8px 10px;cursor:pointer">Reset</button></div></div>
+    <div class="mapArea">
+      <div id="map" class="map"></div>
+      <aside class="sideProfile" id="profil">
+        <div class="profileTop" id="profileImage">FOTO RASMI PUSAT SMART DESA</div>
+        <div class="profileBody">
+          <span class="status"><i></i><span id="pStatus">Keutamaan 2024</span></span>
+          <h4 id="pName">Kampung Sri Taman Baru</h4><div class="place" id="pDistrict">Hulu Langat</div>
+          <div class="profileGrid"><div><small>Mukim</small><b id="pMukim">—</b></div><div><small>DUN</small><b id="pDun">—</b></div><div><small>Koordinat</small><b id="pCoord">—</b></div><div><small>Status Data</small><b>Rujukan</b></div></div>
+          <p id="pSummary">—</p><b style="font-size:10px;color:var(--navy)">KOMPONEN UTAMA</b><div class="chips" id="pChips" style="margin-top:8px"></div>
+          <p id="pDetails"></p>
+          <a class="profileBtn" href="#" onclick="alert('Profil penuh, galeri dan dokumen rasmi boleh disambungkan dalam fasa seterusnya.');return false">BUKA PROFIL PENUH →</a>
+        </div>
+      </aside>
     </div>
-    <p id="pSummary" style="font-size:11px;line-height:1.55;color:#587083"></p>
-    <b style="font-size:11px;color:var(--navy)">Komponen Utama</b>
-    <div class="chips" id="pChips" style="margin-top:8px"></div>
-    <div id="pDetails" style="font-size:11px;line-height:1.55;color:#587083;margin-top:12px"></div>
-    <a class="btn" href="#" onclick="alert('Dalam versi akhir, pautan ini boleh membuka profil penuh, galeri rasmi dan dokumen berkaitan.');return false">BUKA PROFIL PENUH →</a>
   </div>
-</aside>
-</div>
+</section>
+
+<section id="impak" class="section">
+  <div class="sectionTitle"><div><h3>Data & Impak</h3><p>Rangka dashboard yang boleh dihubungkan dengan data pelaksanaan sebenar.</p></div></div>
+  <div class="kpiGrid">
+    <div class="kpi"><span class="k">Lokasi Rujukan</span><b>18</b><div class="bar"><i style="width:90%"></i></div></div>
+    <div class="kpi"><span class="k">Senarai Pendek</span><b>5</b><div class="bar"><i style="width:28%"></i></div></div>
+    <div class="kpi"><span class="k">Keutamaan Awal</span><b>2</b><div class="bar"><i style="width:12%"></i></div></div>
+    <div class="kpi"><span class="k">Kriteria Pemilihan</span><b>5</b><div class="bar"><i style="width:100%"></i></div></div>
+  </div>
+</section>
+
+<section id="lokasi" class="section">
+  <div class="sectionTitle"><div><h3>Lokasi Pilihan</h3><p>Kad profil ringkas untuk akses pantas.</p></div></div>
+  <div class="cards" id="siteCards"></div>
+</section>
 
 <section class="section">
-<div class="card">
-  <div class="cardhead"><h3>Lokasi Pilihan</h3><span>Terokai profil</span></div>
-  <div class="content cards" id="cards"></div>
-</div>
+  <div class="infoStrip">
+    <div><b>DESA BESTARI</b><span>Memperkukuh kemudahan dan persekitaran desa mengikut keperluan setempat.</span></div>
+    <div><b>KOMUNITI SEJAHTERA</b><span>Menyokong aktiviti komuniti, ICT, ekonomi dan kesejahteraan masyarakat.</span></div>
+    <div><b>SELANGOR MAJU</b><span>Platform informasi yang lebih terbuka, tersusun dan mudah diteroka oleh awam.</span></div>
+  </div>
 </section>
 </main>
 
-<footer class="footer"><div class="footerinner"><div><b>PUSAT SMART DESA NEGERI SELANGOR</b><br>PLANMalaysia Selangor</div><div style="text-align:right">Reka bentuk korporat untuk paparan awam<br>Gantikan gambar, koordinat, status dan KPI dengan data rasmi sebelum penerbitan.</div></div></footer>
+<footer id="footer" class="footer"><div class="container footergrid">
+  <div><b>PUSAT SMART DESA NEGERI SELANGOR</b><br><small>PLANMalaysia Selangor<br>Jabatan Perancangan Bandar dan Desa Negeri Selangor</small></div>
+  <div><b>UNTUK PAPARAN AWAM</b><br><small>Antaramuka ini direka sebagai platform informasi dan visualisasi. Data rasmi perlu disahkan sebelum penerbitan.</small></div>
+  <div><b>NOTA DATA</b><br><small>Koordinat prototaip adalah anggaran visual. Gantikan dengan koordinat GIS rasmi serta foto, KPI dan status terkini sebelum dilancarkan kepada umum.</small></div>
+</div><div class="container warning">Sumber asas lokasi: dokumen projek perintis 2024. Maklumat yang belum disahkan tidak dipersembahkan sebagai status semasa rasmi.</div></footer>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-const data = {"project": "Pusat SMART Desa Negeri Selangor", "source_note": "Senarai lokasi berasaskan dokumen projek perintis 2024; koordinat adalah anggaran visual dan perlu diganti dengan data GIS rasmi sebelum penerbitan awam.", "locations": [{"id": 1, "name": "Kampung Sri Taman Baru", "district": "Hulu Langat", "mukim": "Penghulu Ampang 2", "dun": "N20 Lembah Jaya", "status": "Keutamaan 2024", "shortlisted": true, "priority": true, "lat": 3.1223, "lng": 101.7556, "summary": "Kampung dalam bandar dengan penggunaan komuniti yang aktif.", "components": ["Pusat ICT & WiFi", "Pusat Kegiatan Wanita", "Ruang Mesyuarat", "Kiosk Jualan", "Ruang Pejabat MPKK"], "details": "Cadangan 2024 menekankan kemudahan ICT, aktiviti wanita, ruang mesyuarat, kiosk jualan dan ruang pejabat MPKK. JPKK turut merancang kelas komputer dan penyewaan kemudahan."}, {"id": 2, "name": "Kampung Budiman", "district": "Petaling", "mukim": "Bukit Raja", "dun": "N42 Meru", "status": "Keutamaan 2024", "shortlisted": true, "priority": true, "lat": 3.0735, "lng": 101.4628, "summary": "Lokasi strategik dengan potensi produk kampung dan aktiviti wanita.", "components": ["Pusat Info Pelancongan", "SMART Agro Hub", "Pusat Kegiatan Wanita Berdaya", "Ruang Pejabat MPKK", "WiFi"], "details": "Cadangan memberi fokus kepada promosi produk kampung, ruang perniagaan, aktiviti wanita dan maklumat pelancongan. Lokasi turut melibatkan konteks sempadan dua PBT."}, {"id": 3, "name": "Kampung Sungai Tua Bharu", "district": "Gombak", "mukim": "—", "dun": "—", "status": "Senarai pendek 2024", "shortlisted": true, "priority": false, "lat": 3.277, "lng": 101.691}, {"id": 4, "name": "Kampung Padang Jawa", "district": "Klang", "mukim": "—", "dun": "—", "status": "Senarai pendek 2024", "shortlisted": true, "priority": false, "lat": 3.055, "lng": 101.493}, {"id": 5, "name": "Kampung Kian Sit (Site A)", "district": "Sabak Bernam", "mukim": "—", "dun": "—", "status": "Senarai pendek 2024", "shortlisted": true, "priority": false, "lat": 3.664, "lng": 100.988}, {"id": 6, "name": "Kampung Ampang Campuran", "district": "Hulu Langat", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 3.149, "lng": 101.769}, {"id": 7, "name": "Kampung Bukit Lanchong", "district": "Petaling", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 3.016, "lng": 101.564}, {"id": 8, "name": "Kampung Baru Hicom Seksyen 26", "district": "Petaling", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 3.003, "lng": 101.558}, {"id": 9, "name": "Kampung Teluk Nipah, Pulau Indah", "district": "Klang", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 2.965, "lng": 101.356}, {"id": 10, "name": "Kampung Perigi Nanas, Pulau Indah", "district": "Klang", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 2.978, "lng": 101.378}, {"id": 11, "name": "Kampung Baru Chuang Rasa", "district": "Hulu Selangor", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 3.563, "lng": 101.653}, {"id": 12, "name": "Kampung Tun Abdul Razak, Kuala Kubu Bharu", "district": "Hulu Selangor", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 3.553, "lng": 101.66}, {"id": 13, "name": "Kampung Baru Sungai Pelek", "district": "Sepang", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 2.388, "lng": 101.708}, {"id": 14, "name": "Labu Lanjut", "district": "Sepang", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 2.53, "lng": 101.676}, {"id": 15, "name": "Mini RTB Labu Lanjut", "district": "Sepang", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 2.515, "lng": 101.68}, {"id": 16, "name": "Tanjung Mas, Sungai Pelek", "district": "Sepang", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 2.365, "lng": 101.702}, {"id": 17, "name": "Kampung Banting", "district": "Kuala Langat", "mukim": "—", "dun": "—", "status": "Senarai awal 2024", "shortlisted": false, "priority": false, "lat": 2.816, "lng": 101.501}, {"id": 18, "name": "Balai ICT Kampung Endah", "district": "Kuala Langat", "mukim": "—", "dun": "—", "status": "Rujukan semasa 2025", "shortlisted": false, "priority": false, "lat": 2.836, "lng": 101.497}]};
-const map = L.map('map',{zoomControl:true}).setView([3.12,101.55],9);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
-let markers=[], filtered=data.locations.slice();
-
-const districtSel=document.getElementById('district');
-[...new Set(data.locations.map(x=>x.district))].sort().forEach(d=>{let o=document.createElement('option');o.value=d;o.textContent=d;districtSel.appendChild(o)});
-
-function color(x){return x.priority?'#f5b81b':x.shortlisted?'#7c3aed':'#0b67b2'}
-function markerFor(x){
-  const icon=L.divIcon({className:'',html:`<div style="width:27px;height:27px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:${color(x)};border:3px solid white;box-shadow:0 3px 8px #0005"><span style="display:block;transform:rotate(45deg);color:white;text-align:center;font-weight:900;font-size:12px;line-height:21px">⌂</span></div>`,iconSize:[27,27],iconAnchor:[13,27]});
-  const m=L.marker([x.lat,x.lng],{icon}).addTo(map);
-  m.bindTooltip(x.name,{direction:'top',offset:[0,-20]});
-  m.on('click',()=>showProfile(x));
-  return m;
-}
-function render(){
-  markers.forEach(m=>map.removeLayer(m));markers=[];
-  filtered.forEach(x=>markers.push(markerFor(x)));
-  document.getElementById('countLabel').textContent=filtered.length+' lokasi';
-  renderList();
-}
-function showProfile(x){
- document.getElementById('pName').textContent=x.name;
- document.getElementById('pDistrict').textContent=x.district;
- document.getElementById('pMukim').textContent=x.mukim||'—';
- document.getElementById('pDun').textContent=x.dun||'—';
- document.getElementById('pStatus').textContent=x.status.toUpperCase();
- document.getElementById('pCoord').textContent=x.lat.toFixed(4)+', '+x.lng.toFixed(4)+'*';
- document.getElementById('pSummary').textContent=x.summary||'Maklumat profil terperinci akan diisi berdasarkan data rasmi.';
- document.getElementById('pDetails').textContent=x.details||'Profil terperinci, komponen, galeri, KPI dan dokumen perlu diisi dengan maklumat rasmi.';
- document.getElementById('pChips').innerHTML=(x.components||['Maklumat akan dikemas kini']).map(c=>`<span class="chip">${c}</span>`).join('');
- map.setView([x.lat,x.lng],11,{animate:true});
-}
-function renderList(){
- const cards=document.getElementById('cards');cards.innerHTML='';
- data.locations.filter(x=>x.shortlisted).forEach(x=>{
-   const el=document.createElement('div');el.className='photoCard';el.innerHTML=`<div class="photo">GAMBAR RASMI<br>${x.name}</div><div class="pc"><b>${x.name}</b><small>${x.district} • ${x.status}</small></div>`;
-   el.onclick=()=>showProfile(x);cards.appendChild(el);
- });
-}
-function apply(){
- const q=document.getElementById('search').value.toLowerCase();
- const d=districtSel.value,s=document.getElementById('status').value;
- filtered=data.locations.filter(x=>(!q||(x.name+' '+x.district).toLowerCase().includes(q))&&(!d||x.district===d)&&(!s||x.status===s));
- render();
-}
-document.getElementById('search').oninput=apply;districtSel.onchange=apply;document.getElementById('status').onchange=apply;
-render();showProfile(data.locations[0]);
-</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="js/app.js"></script>
 </body></html>
