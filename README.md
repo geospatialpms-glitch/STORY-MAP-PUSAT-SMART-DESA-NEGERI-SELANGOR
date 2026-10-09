@@ -1,26 +1,10 @@
-# Pusat SMART Desa Negeri Selangor — WOW Corporate V2
+# StoryMap Pusat Smart Desa Negeri Selangor — V19
 
-Versi ini direka semula sebagai dashboard awam yang lebih premium:
-- Hero korporat
-- Navigasi sticky
-- Peta interaktif besar
-- Search + filter daerah + filter status
-- Profil lokasi sebelah peta
-- KPI / Data & Impak
-- Kad lokasi pilihan
-- Responsive desktop/mobile
-- Struktur fail dipisahkan supaya mudah diselenggara
+Perubahan:
+- Tiga ayat panduan dan pengulangan label pada bahagian transformasi dibuang.
+- Paparan lima kisah sebelum/selepas dikekalkan dan diluaskan.
+- Blok “Lima lokasi. Pelbagai potensi.” (termasuk peta kedua) dibuang.
+- Navigasi Lokasi terus ke satu-satunya peta penuh.
+- Logo SUO, Smart Desa, infografik, gambar, pemantauan dan bunyi desa kekal.
 
-## Upload ke GitHub Pages
-
-Upload **isi folder ini**, bukan ZIP:
-- `index.html`
-- `data.json`
-- `css/style.css`
-- `js/app.js`
-- `README.md`
-
-Pastikan `index.html` berada di ROOT repository.
-
-## Nota penting
-Koordinat adalah anggaran visual untuk prototaip. Foto rasmi, koordinat GIS, status semasa, KPI dan dokumen perlu diganti/disahkan sebelum paparan awam.
+Muat naik index.html ke GitHub Pages. Peta asas memerlukan internet.
