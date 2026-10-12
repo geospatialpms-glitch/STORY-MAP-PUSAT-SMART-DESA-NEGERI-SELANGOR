@@ -1507,6 +1507,17 @@ html[lang="en"] .sd-english-graphic-note{display:block}
 .sd-video-empty-v48{min-height:185px}
 .sd-video-panel-v48 video{width:100%;aspect-ratio:16/9}
 
+
+/* V50 — Google Drive video embed, lightweight and responsive */
+.sd-video-drive-v50{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:15px;background:#103f35;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.sd-video-drive-v50 iframe{position:absolute;inset:0;display:block;width:100%;height:100%;border:0;background:#103f35}
+.sd-video-drive-links-v50{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;align-items:center;padding-top:12px}
+.sd-video-drive-links-v50>span{color:#4b7968;font-size:12px;font-weight:750}
+.sd-video-drive-links-v50>a{display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;min-height:38px;border-radius:99px;background:#e2f6eb;color:#116c50;font-size:12px;font-weight:850;text-decoration:none;border:1px solid #bfebd2;transition:background .2s,transform .2s}
+.sd-video-drive-links-v50>a:hover{background:#c8efd8;transform:translateY(-1px)}
+.sd-video-drive-links-v50>a:focus-visible{outline:3px solid #168f6c;outline-offset:3px}
+.sd-video-drive-note-v50{margin:9px 0 0;color:#6c8378;line-height:1.6;font-size:11px}
+@media(max-width:640px){.sd-video-drive-links-v50>a{width:100%}}
 </style>
 </head>
 <body>
@@ -1875,7 +1886,7 @@ function openModalImage(p){return p.image?`<img src="${p.image}" alt="${p.imageL
 /* V48: Album per kampung. Isi arrays ini apabila foto/video baharu dibekalkan.
    Simpan fail video di folder assets/video/ dalam pakej GitHub pada masa hadapan. */
 const SD_SITE_MEDIA_V48={
- sungai:{photos:[],videos:{transformasi:''}},
+ sungai:{photos:[],videos:{transformasi:{provider:'google-drive',embed:'https://drive.google.com/file/d/1F8PADY-pzElj6yVQ-tj5Q-oHxERCl3iq/preview',watch:'https://drive.google.com/file/d/1F8PADY-pzElj6yVQ-tj5Q-oHxERCl3iq/view?usp=drivesdk'}}},
  endah:{photos:[],videos:{transformasi:''}},
  budiman:{photos:[],videos:{transformasi:''}},
  taman:{photos:[],videos:{transformasi:''}},
@@ -1895,7 +1906,15 @@ function sdPhotosForSiteV48(p){
 function sdVideoPanelV48(p){
  const value=SD_SITE_MEDIA_V48[p.id]?.videos?.transformasi||'';
  const heading='Video Transformasi';
- const content=value?`<video controls playsinline preload="metadata" src="${value}" aria-label="${heading} ${p.name}">Pelayar anda tidak menyokong video.</video>`:`<div class="sd-video-empty-v48"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="14" height="14" rx="3"/><path d="m17 10 4-3v10l-4-3"/><path d="m8 10 4 2-4 2z"/></svg><b>Video transformasi akan dimasukkan</b><small>Ruang disediakan untuk rakaman sebenar.</small></div>`;
+ let content='';
+ // V50: Google Drive preview uses an iframe; direct MP4 URLs remain supported for later villages.
+ if(value&&typeof value==='object'&&value.provider==='google-drive'){
+  content=`<div class="sd-video-drive-v50"><iframe loading="lazy" src="${value.embed}" title="${heading} — ${p.name}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><div class="sd-video-drive-links-v50"><span>Rakaman transformasi sebenar · ${p.name}</span><a href="${value.watch}" target="_blank" rel="noopener noreferrer">Buka video di Google Drive ↗</a></div><p class="sd-video-drive-note-v50">Jika video tidak dimainkan, gunakan pautan Google Drive. Akses bergantung pada tetapan perkongsian pemilik video.</p>`;
+ }else if(typeof value==='string'&&value){
+  content=`<video controls playsinline preload="metadata" src="${value}" aria-label="${heading} ${p.name}">Pelayar anda tidak menyokong video.</video>`;
+ }else{
+  content=`<div class="sd-video-empty-v48"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="14" height="14" rx="3"/><path d="m17 10 4-3v10l-4-3"/><path d="m8 10 4 2-4 2z"/></svg><b>Video transformasi akan dimasukkan</b><small>Ruang disediakan untuk rakaman sebenar.</small></div>`;
+ }
  return `<article class="sd-video-panel-v48"><div class="sd-video-panel-head-v48"><span class="sd-video-dot-v48">▶</span>${heading}</div>${content}</article>`;
 }
 function sdSiteMediaMarkupV48(p){
@@ -2316,6 +2335,10 @@ function initializeMaps(){buildMap()}
  "Galeri foto akan dikemas kini":"Photo gallery will be updated",
  "Foto sebenar projek dan aktiviti akan dipaparkan di sini apabila dibekalkan.":"Actual project and activity photos will appear here when supplied.",
  "Video Transformasi":"Transformation Video",
+ "Buka video di Google Drive ↗":"Watch on Google Drive ↗",
+ "Jika video tidak dimainkan, gunakan pautan Google Drive. Akses bergantung pada tetapan perkongsian pemilik video.":"If the video does not play, open it in Google Drive. Access depends on the video owner's sharing settings.",
+ "Rakaman transformasi sebenar ·":"Actual transformation footage ·",
+
  "Ikuti perjalanan perubahan Pusat Smart Desa melalui rakaman keadaan asal, proses naik taraf dan hasil transformasi setiap kampung.":"Follow each village centre's transformation through footage of its original condition, upgrading process and results.",
  "VIDEO PROJEK":"PROJECT VIDEO",
  "Video transformasi akan dimasukkan":"Transformation video will be added",
